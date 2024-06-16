@@ -17,12 +17,12 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
   @override
   void initState() {
     gameModel = [
-      GameModel("frog", Image_insert.frog1),
-      GameModel("dog", Image_insert.dog1),
-      GameModel("frog", Image_insert.frog2),
-      GameModel("cat", Image_insert.cat1),
-      GameModel("dog", Image_insert.dog2),
-      GameModel("cat", Image_insert.cat2),
+      GameModel("frog", Image_insert.frog1, 1),
+      GameModel("dog", Image_insert.dog1, 2),
+      GameModel("frog", Image_insert.frog2, 3),
+      GameModel("cat", Image_insert.cat1, 4),
+      GameModel("dog", Image_insert.dog2, 5),
+      GameModel("cat", Image_insert.cat2, 6),
     ];
 
     super.initState();
@@ -38,7 +38,7 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Cards",
           style: TextStyle(color: Colors.white),
         ),
@@ -51,37 +51,34 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.all(20),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
-
-              gameModeNow.add(gameModel[index]);
-              gameModel.remove(index);
               return InkWell(
                 onTap: () {
                   setState(() {
-                    gameModeNow[index].isOpen = !gameModeNow[index].isOpen;
+                    gameModel[index].isOpen = !gameModel[index].isOpen;
                   });
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    image: gameModeNow[index].isOpen
+                    image: gameModel[index].isOpen
                         ? DecorationImage(
-                            image: ExactAssetImage(gameModeNow[index].picture),
+                            image: ExactAssetImage(gameModel[index].picture),
                             fit: BoxFit.fill)
                         : null,
                     color: Colors.blueAccent,
                   ),
                   child: Center(
                     child: Text(
-                      "${gameModeNow[index].isOpen ? "" : "?"}",
-                      style: TextStyle(
-                          fontSize: 20,
+                      gameModel[index].isOpen ? "" : "?",
+                      style: const TextStyle(
+                          fontSize: 30,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -90,33 +87,19 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
               );
             },
           ),
-          Center(
-            child: Container(
-              height: 10,
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                ),
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return Visibility(
-                    visible: gameModel[index].isOpen ? true : false,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return Demo_Grid_View();
-                            }));
-                      },
-                      child: Text(
-                        "Reset",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  );
+          Visibility(
 
-                }
+            visible: true,
+            child: InkWell(
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return Demo_Grid_View();
+                }));
+              },
+              child: Text(
+                "Reset",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -130,6 +113,8 @@ class GameModel {
   bool isOpen;
   String value;
   String picture;
+  int isfull;
 
-  GameModel(this.value, this.picture, {this.isOpen = false});
+  GameModel(this.value, this.picture, this.isfull, {this.isOpen = false});
 }
+
