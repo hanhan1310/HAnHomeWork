@@ -14,6 +14,8 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
   late List<GameModel> gameModel = [];
   late List<GameModel> gameModeNow = List.from(gameModel);
   late int count = 0;
+  late int score = 0;
+  GameModel? lastOpenedCard;
 
   @override
   void initState() {
@@ -25,7 +27,7 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
       GameModel("dog", Image_insert.dog2, 5),
       GameModel("cat", Image_insert.cat2, 6),
     ];
-
+    gameModeNow = List.from(gameModel);
     super.initState();
   }
 
@@ -33,6 +35,10 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
   void dispose() {
     gameModel.clear();
     super.dispose();
+  }
+
+  bool allCardsFlipped() {
+    return gameModeNow.every((card) => card.isOpen);
   }
 
   @override
@@ -50,29 +56,40 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
         children: [
           GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.all(20),
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
-            itemCount: 6,
+            itemCount: gameModeNow.length,
             itemBuilder: (BuildContext context, int index) {
-              gameModel.remove(index);
               return InkWell(
                 onTap: () {
                   setState(() {
                     gameModeNow[index].isOpen = !gameModeNow[index].isOpen;
-                  });
+                    if (lastOpenedCard != null) {
+                      if (lastOpenedCard!.value == gameModeNow[index].value &&
+                          lastOpenedCard != gameModeNow[index]) {
+                        score += 1;
+                      } else {
+                        gameModeNow[index].isOpen = false;
+                        lastOpenedCard!.isOpen = false;
+                      }
+                      lastOpenedCard = null;
+                    } else {
+                      lastOpenedCard = gameModeNow[index];
+                    }
+                  },);
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     image: gameModeNow[index].isOpen
                         ? DecorationImage(
-                            image: ExactAssetImage(gameModeNow[index].picture),
-                            fit: BoxFit.fill)
+                        image: ExactAssetImage(gameModeNow[index].picture),
+                        fit: BoxFit.fill)
                         : null,
                     color: Colors.blueAccent,
                   ),
@@ -89,22 +106,32 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
               );
             },
           ),
-
-          Visibility(
-            visible: true,
-            child: InkWell(
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return Demo_Grid_View();
-                }));
-              },
-              child: Text(
-                "Reset",
-                style: TextStyle(fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                "Score: $score",
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ),
+              Visibility(
+                visible: allCardsFlipped(),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return const Demo_Grid_View();
+                      },),);
+                  },
+                  child: const Text(
+                    "Reset",
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),
+                  ),
+                ),
+              ),
+
+            ],
           ),
+
         ],
       ),
     );
