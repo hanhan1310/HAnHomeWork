@@ -7,6 +7,8 @@ import 'package:project_buoi_13/login_screen.dart';
 import 'package:project_buoi_13/screen.dart';
 
 import 'GridViewDemo/grid_view_chest.dart';
+import 'demo_bottom_sheet/demo_bottom_sheet.dart';
+import 'demo_check_box/demo_check_box.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Demo_Grid_View(),
+      home: Demo_bottom_sheet(count: 3,),
     );
   }
 }
