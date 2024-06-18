@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_buoi_13/image_class.dart';
 
-class Demo_Grid_View extends StatefulWidget {
-  const Demo_Grid_View({super.key});
+class Demo_Grid_View2 extends StatefulWidget {
+  const Demo_Grid_View2({super.key});
 
   @override
-  State<Demo_Grid_View> createState() => _Demo_Grid_ViewState();
+  State<Demo_Grid_View2> createState() => _Demo_Grid_ViewState2();
 }
 
-class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
+class _Demo_Grid_ViewState2 extends State<Demo_Grid_View2> {
   late List<GameModel> gameModel = [];
   late List<GameModel> gameModeNow = List.from(gameModel);
   late int count = 0;
@@ -57,7 +57,8 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+            padding:
+                const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
@@ -67,29 +68,31 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  setState(() {
-                    gameModeNow[index].isOpen = !gameModeNow[index].isOpen;
-                    if (lastOpenedCard != null) {
-                      if (lastOpenedCard!.value == gameModeNow[index].value &&
-                          lastOpenedCard != gameModeNow[index]) {
-                        score += 1;
+                  setState(
+                    () {
+                      gameModeNow[index].isOpen = !gameModeNow[index].isOpen;
+                      if (lastOpenedCard != null) {
+                        if (lastOpenedCard!.value == gameModeNow[index].value &&
+                            lastOpenedCard != gameModeNow[index]) {
+                          score += 1;
+                        } else {
+                          gameModeNow[index].isOpen = false;
+                          lastOpenedCard!.isOpen = false;
+                        }
+                        lastOpenedCard = null;
                       } else {
-                        gameModeNow[index].isOpen = false;
-                        lastOpenedCard!.isOpen = false;
+                        lastOpenedCard = gameModeNow[index];
                       }
-                      lastOpenedCard = null;
-                    } else {
-                      lastOpenedCard = gameModeNow[index];
-                    }
-                  },);
+                    },
+                  );
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     image: gameModeNow[index].isOpen
                         ? DecorationImage(
-                        image: ExactAssetImage(gameModeNow[index].picture),
-                        fit: BoxFit.fill)
+                            image: ExactAssetImage(gameModeNow[index].picture),
+                            fit: BoxFit.fill)
                         : null,
                     color: Colors.blueAccent,
                   ),
@@ -111,27 +114,30 @@ class _Demo_Grid_ViewState extends State<Demo_Grid_View> {
             children: [
               Text(
                 "Score: $score",
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Visibility(
                 visible: allCardsFlipped(),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return const Demo_Grid_View();
-                      },),);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const Demo_Grid_View2();
+                        },
+                      ),
+                    );
                   },
                   child: const Text(
                     "Reset",
-                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                 ),
               ),
-
             ],
           ),
-
         ],
       ),
     );
