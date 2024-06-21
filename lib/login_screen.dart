@@ -88,8 +88,9 @@ class _Login_ScreenState extends State<Login_Screen> {
                 ),
                 TextFormField(
                   controller: _userName,
+                  onTapOutside: ((even){ FocusScope.of(context).unfocus();}),
                   validator: (value){
-                    if(value != "hoangan"){
+                    if(value != "hoangan" || value == null){
                       return "Vui long nhap lai";
                     }
                     return null;

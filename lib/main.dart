@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_buoi_13/GridViewDemo/demo_grid_view.dart';
 import 'package:project_buoi_13/GridViewDemo/test_cards_game.dart';
+
 import 'package:project_buoi_13/list_view/tesr.dart';
 import 'package:project_buoi_13/list_view/test.dart';
 import 'package:project_buoi_13/login_screen.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Demo_bottom_sheet(count: 3,),
+      home: Login_Screen(),
     );
   }
 }
