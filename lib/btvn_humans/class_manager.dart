@@ -11,13 +11,14 @@ class Manager extends Humans {
   ];
   Manager(super.id, super.name, super.age, super.image);
 
-  static void searching(List<Humans> human, String forSearching, List<Humans> saveList) {
-
+  static List<Humans> searching(List<Humans> human, String forSearching ) {
+    List<Humans> saveList = [];
     for (int i = 0; i < human.length; i++) {
       if (human[i].name.contains(forSearching)) {
         saveList.add(human[i]);
       }
     }
+    return saveList;
   }
 
   static List<Humans> sortList(List<Humans> human) {

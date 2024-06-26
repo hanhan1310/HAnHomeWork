@@ -22,7 +22,7 @@ class _FinalScreenState extends State<FinalScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    saveList;
+    saveList = Manager.human;
     humans = Manager.human;
     super.initState();
 
@@ -81,14 +81,16 @@ class _FinalScreenState extends State<FinalScreen> {
                   FocusScope.of(context).unfocus();
                 }),
                 onChanged: (value) {
+                  setState(() {
                   if(value.isEmpty){
                     saveList = Manager.human;
                   }else{
-                    Manager.searching(Manager.human, value, saveList);
+                    saveList = Manager.searching(Manager.human, value);
                   }
-                  setState(() {
-                    humans = saveList;
+
+                    humans = List<Humans>.from(saveList);
                   },);
+
                 },
               ),
             ),
