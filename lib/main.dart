@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_buoi_13/GridViewDemo/demo_grid_view.dart';
-import 'package:project_buoi_13/GridViewDemo/test_cards_game.dart';
-
-import 'package:project_buoi_13/list_view/tesr.dart';
-import 'package:project_buoi_13/list_view/test.dart';
-import 'package:project_buoi_13/login_screen.dart';
-import 'package:project_buoi_13/screen.dart';
-
-import 'GridViewDemo/grid_view_chest.dart';
-import 'demo_bottom_sheet/demo_bottom_sheet.dart';
-import 'demo_check_box/demo_check_box.dart';
+import 'package:project_buoi_13/btvn_humans/screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Login_Screen(),
+      home: const FinalScreen(),
     );
   }
 }
