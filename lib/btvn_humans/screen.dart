@@ -25,7 +25,6 @@ class _FinalScreenState extends State<FinalScreen> {
     saveList = Manager.human;
     humans = Manager.human;
     super.initState();
-
   }
 
   @override
@@ -58,9 +57,11 @@ class _FinalScreenState extends State<FinalScreen> {
               shape: BoxShape.circle,
               color: Colors.blueAccent,
             ),
-            child: const Icon(Icons.filter_list_alt, color: Colors.white,),
+            child: const Icon(
+              Icons.filter_list_alt,
+              color: Colors.white,
+            ),
           ),
-
         ),
         body: Column(
           children: [
@@ -81,16 +82,17 @@ class _FinalScreenState extends State<FinalScreen> {
                   FocusScope.of(context).unfocus();
                 }),
                 onChanged: (value) {
-                  setState(() {
-                  if(value.isEmpty){
-                    saveList = Manager.human;
-                  }else{
-                    saveList = Manager.searching(Manager.human, value);
-                  }
+                  setState(
+                    () {
+                      if (value.isEmpty) {
+                        saveList = Manager.human;
+                      } else {
+                        saveList = Manager.searching(Manager.human, value);
+                      }
 
-                    humans = List<Humans>.from(saveList);
-                  },);
-
+                      humans = List<Humans>.from(saveList);
+                    },
+                  );
                 },
               ),
             ),
@@ -99,6 +101,9 @@ class _FinalScreenState extends State<FinalScreen> {
                 itemCount: humans.length,
                 itemBuilder: (context, index) {
                   return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
                     height: 70,
                     width: double.maxFinite,
                     margin: const EdgeInsets.all(5),
@@ -109,12 +114,13 @@ class _FinalScreenState extends State<FinalScreen> {
                           radius: 40,
                         ),
                         Container(
+
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(humans[index].name),
+                              Text(humans[index].name, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
                               Text(humans[index].age.toString()),
                             ],
                           ),
